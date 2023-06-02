@@ -21,7 +21,7 @@ func GetMovies(c *gin.Context) {
 
 	for cur.Next(context.Background()) {
 		var movie Movie;
-		err := c.BindJSON(&movie);
+		err := cur.Decode(&movie);
 		if (err != nil) {
 			log.Fatal(err);
 		}
@@ -99,14 +99,25 @@ func EditMovie(c *gin.Context) {
 		return;
 	}
 	
-	updatedMovie := bson.D {
-		{"$set", bson.D {
-			{"name", jsonMovie.Name},
-			{"release_date", jsonMovie.Release_Date},
-			{"director", jsonMovie.Director},
-			{"category", jsonMovie.Category},
-		}},
+	updatedMovie := bson.D{
+		bson.E{
+			Key:   "$set",
+			Value: bson.D{
+				bson.E{Key: "name", Value: jsonMovie.Name},
+				bson.E{Key: "release_date", Value: jsonMovie.Release_Date},
+				bson.E{Key: "director", Value: jsonMovie.Director},
+				bson.E{Key: "category", Value: jsonMovie.Category},
+			},
+		},
 	}
+	// updatedMovie := bson.D {
+	// 	{"$set", bson.D {
+	// 		{"name", jsonMovie.Name},
+	// 		{"release_date", jsonMovie.Release_Date},
+	// 		{"director", jsonMovie.Director},
+	// 		{"category", jsonMovie.Category},
+	// 	}},
+	// }
 
 	res, err := moviesCollection.UpdateOne(context.Background(), bson.M{"_id": id}, updatedMovie);
 

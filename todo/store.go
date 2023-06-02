@@ -17,26 +17,26 @@ type Movie struct {
 }
 
 var (
-	movies []Movie
 	Client *mongo.Client
 )
 
 func Init() {
-	// set client to option
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017");
+    // set client to option
+    clientOptions := options.Client().ApplyURI("mongodb://localhost:27017");
 
-	// connect to mongo
-	Client, err := mongo.Connect(context.TODO(), clientOptions);
+    // connect to mongo
+    var err error
+    Client, err = mongo.Connect(context.TODO(), clientOptions);
 
-	if (err != nil) {
-		log.Fatal(err);
-	}
+    if err != nil {
+        log.Fatal(err);
+    }
 
-	// check connection
-	connectErr := Client.Ping(context.TODO(), nil);
-	if (connectErr != nil) {
-		log.Fatal(connectErr);
-	}
-	
-	log.Println("Connect to Mongo successfully !");
+    // check connection
+    connectErr := Client.Ping(context.TODO(), nil);
+    if connectErr != nil {
+        log.Fatal(connectErr);
+    }
+    
+    log.Println("Connect to Mongo successfully !");
 }
