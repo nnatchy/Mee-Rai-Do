@@ -6,6 +6,9 @@ import (
 )
 
 func main() {
+	// Init mongodb
+	todo.Init();
+
 	r := gin.Default();
 
 	// Methods
@@ -15,5 +18,6 @@ func main() {
 	r.PUT("/movies/:id", todo.EditMovie);
 	r.DELETE("/movies/:id", todo.DeleteMovie);
 
+	// Run localhost
 	r.Run(":8080");
 }

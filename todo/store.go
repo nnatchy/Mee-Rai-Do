@@ -3,16 +3,17 @@ package todo
 import (
 	"context"
 	"log"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Movie struct {
-	ID string `json: "id"`
-	Name string `json: "name"`
-	Release_Date string `json: "release_date"`
-	Director string `json: "director"`
-	Category []string `json: "category"`
+	ID primitive.ObjectID `bson:"_id,omitempty" json: "id,omitempty"`
+	Name string `bson:"name,omitempty" json: "name,omitempty"`
+	Release_Date string `bson:"release_date,omitempty" json: "release_date,omitempty"`
+	Director string `bson:"director,omitempty" json: "director,omitempty"`
+	Category []string `bson:"category,omitempty" json: "category,omitempty"`
 }
 
 var (
